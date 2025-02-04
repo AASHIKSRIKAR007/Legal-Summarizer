@@ -1,0 +1,25 @@
+model 1:
+Generating summaries using the baseline model...
+Baseline Model ROUGE Results: {'rouge1': np.float64(0.11437072985053928), 'rouge2': np.float64(0.04268771584982891), 'rougeL': np.float64(0.08074065384826024), 'rougeLsum': np.float64(0.09952957845446811)}
+Generating summaries using the fine-tuned model...
+C:\Users\lksai\Desktop\ProjTry\Legal-Summarizer\venv\Lib\site-packages\transformers\models\bart\configuration_bart.py:176: UserWarning: Please make sure the config includes `forced_bos_token_id=0` in future versions. The config can simply be saved and uploaded again to be fixed.
+  warnings.warn(
+Fine-tuned model bos_token: 0
+Fine-Tuned Model ROUGE Results: {'rouge1': np.float64(0.3649209209068192), 'rouge2': np.float64(0.1592962744752197), 'rougeL': np.float64(0.20181811148770604), 'rougeLsum': np.float64(0.33534942646435967)}
+
+Comparison of ROUGE Results:
+Baseline Model ROUGE-L: 0.08074065384826024
+Fine-Tuned Model ROUGE-L: 0.20181811148770604
+
+Model 2:
+Generating summaries using the baseline model...
+Baseline Model ROUGE Results: {'rouge1': 0.11431519577917269, 'rouge2': 0.04229176406411158, 'rougeL': 0.08120596655679466, 'rougeLsum': 0.09984913790030023}
+Generating summaries using the fine-tuned model...
+C:\Users\lksai\Desktop\ProjTry\Legal-Summarizer\venv\Lib\site-packages\transformers\models\bart\configuration_bart.py:176: UserWarning: Please make sure the config includes `forced_bos_token_id=0` in future versions. The config can simply be saved and uploaded again to be fixed.
+  warnings.warn(
+Fine-tuned model bos_token: 0
+Fine-Tuned Model ROUGE Results: {'rouge1': 0.35207547530507155, 'rouge2': 0.14772730138777748, 'rougeL': 0.19105118447976832, 'rougeLsum': 0.32182768977893483}
+
+Comparison of ROUGE Results:
+Baseline Model ROUGE-L: 0.08120596655679466
+Fine-Tuned Model ROUGE-L: 0.19105118447976832
