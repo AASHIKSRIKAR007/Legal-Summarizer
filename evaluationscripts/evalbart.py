@@ -1,3 +1,7 @@
+#code to evaluate finetuned BART against baseline model, 
+#output of this code are baselinesummaries.txt, fine_tuned_summaries.txt,(in outputs folder) and 
+# reslut is in evaluatebart resul.txt(in tests folder)
+
 import os
 from transformers import BartTokenizer, BartForConditionalGeneration
 from datasets import Dataset
@@ -85,7 +89,7 @@ print("Baseline Model ROUGE Results:", baseline_rouge_results)
 
 # 2. Fine-Tuned Model Evaluation (MODIFIED)
 print("Generating summaries using the fine-tuned model...")
-fine_tuned_model_path = "./bart-finetuned"
+fine_tuned_model_path = "./bart-finetuned2"
 fine_tuned_tokenizer = BartTokenizer.from_pretrained(fine_tuned_model_path)
 fine_tuned_model = BartForConditionalGeneration.from_pretrained(fine_tuned_model_path)
 fine_tuned_summaries = generate_summaries(test_judgments, fine_tuned_model, fine_tuned_tokenizer)
