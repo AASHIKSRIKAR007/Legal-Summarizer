@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Summary Generator</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+
+<div class="container">
+  <!-- Top Section -->
+  <div class="top-section">
+    <!-- Text Area for Input -->
+    <div class="text-area-container">
+      <textarea id="text-input" placeholder="Paste your text here or upload a .txt file"></textarea>
+    </div>
+    
+    <!-- File Upload Option -->
+    <div class="file-input">
+      <input type="file" id="file-upload" accept=".txt" />
+    </div>
+    
+    <!-- Summary Type Selection (Radio Buttons) -->
+    <div class="radio-buttons">
+      <label>
+        <input type="radio" name="summary-type" value="whole-summary" checked /> Whole Summary
+      </label>
+      <label>
+        <input type="radio" name="summary-type" value="segmented-summary" /> Segmented Summary
+      </label>
+    </div>
+    
+    <!-- Generate Summary Button -->
+    <button class="generate-btn" id="generate-btn">Generate Summary</button>
+  </div>
+
+  <!-- Bottom Section: Output -->
+  <div class="bottom-section">
+    <textarea id="summary-output" placeholder="Your summary will appear here..." readonly></textarea>
+  </div>
+</div>
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

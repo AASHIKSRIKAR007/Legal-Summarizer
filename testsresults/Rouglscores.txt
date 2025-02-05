@@ -1,0 +1,12 @@
+
+Score Range	Interpretation
+0.7 - 0.9	Excellent (very close to reference summaries)
+0.5 - 0.7	Good (captures most important content)
+0.3 - 0.5	Acceptable (some missing information, could be improved)
+< 0.3	Weak (missing key content, needs improvement)
+
+
+ROUGE-L Scores:
+Precision: 0.2305
+Recall:    0.7735
+F1 Score:  0.3550
