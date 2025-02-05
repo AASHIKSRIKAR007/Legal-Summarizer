@@ -18,3 +18,5 @@ testing.py
 finetunelegalbert.py
 preparingdataset.py
 splitdataleg.py
+classification_model
+extractive_model
