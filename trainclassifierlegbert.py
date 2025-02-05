@@ -5,7 +5,7 @@ import json
 import re
 
 # Load preprocessed data
-with open("./data/preprocessed_dataset.json", "r") as f:
+with open("./data/preprocessed_legbert_dataset.json", "r") as f:
     case_data = json.load(f)
 
 # Build classification dataset
@@ -85,3 +85,4 @@ trainer = Trainer(
 )
 trainer.train()
 trainer.save_model("./classification_model/final")
+print("Model saved")
