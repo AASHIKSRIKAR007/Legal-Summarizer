@@ -3,7 +3,7 @@ import re
 import spacy
 import warnings
 import torch
-from transformers import pipeline, BartForConditionalGeneration, BartTokenizer
+from transformers import pipeline, BartForConditionalGeneration, BartTokenizer, AutoModelForSequenceClassification
 import json
 
 app = Flask(__name__)
@@ -29,7 +29,7 @@ def preprocess_text(text):
         text (str): Raw input text.
     
     Returns:
-        list: List of processed sentences.
+        str: A single string with processed sentences for summarization.
     """
     cleaned_text = clean_text(text)
     doc = nlp(cleaned_text)
@@ -39,24 +39,37 @@ def preprocess_text(text):
 ######################################
 # Models for Summarization
 ######################################
+
+# --- Updated Extractive & Classification Models (Load from Hugging Face repo) ---
+
+# Load the extractive model from Hugging Face repository (subfolder "extractive_model")
+extractive_model_obj = AutoModelForSequenceClassification.from_pretrained(
+    "lksai19/Legal-summarizer-models", subfolder="extractive_model"
+)
 extractive_model = pipeline(
     "text-classification",
-    model="./extractive_model/final",
+    model=extractive_model_obj,
     tokenizer="nlpaueb/legal-bert-base-uncased",
     device=-1  # CPU
 )
 
+# Load the classification model from Hugging Face repository (subfolder "classification_model")
+classification_model_obj = AutoModelForSequenceClassification.from_pretrained(
+    "lksai19/Legal-summarizer-models", subfolder="classification_model"
+)
 classification_model = pipeline(
     "text-classification",
-    model="./classification_model/final",
+    model=classification_model_obj,
     tokenizer="nlpaueb/legal-bert-base-uncased",
     device=-1,
     function_to_apply="sigmoid"
 )
 
+# BART model for segmented summarization (unchanged)
 bart_tokenizer_segmented = BartTokenizer.from_pretrained("facebook/bart-large")
 bart_model_segmented = BartForConditionalGeneration.from_pretrained("facebook/bart-large-cnn").cpu()
 
+# Mapping for section labels
 section_map = {0: "facts", 1: "judgment", 2: "analysis", 3: "argument", 4: "statute"}
 
 def generate_segmented_summary(input_text):
@@ -99,19 +112,25 @@ def generate_segmented_summary(input_text):
 
     return "\n".join(abstractive_output)
 
-def load_model(model_path):
-    tokenizer = BartTokenizer.from_pretrained(model_path)
-    model = BartForConditionalGeneration.from_pretrained(model_path)
+# --- Updated Whole Summary Model (Load from Hugging Face repo with correct subfolder) ---
+
+def load_model(model_id, subfolder):
+    """
+    Load the tokenizer and model from the specified Hugging Face repository and subfolder.
+    """
+    tokenizer = BartTokenizer.from_pretrained(model_id, subfolder=subfolder)
+    model = BartForConditionalGeneration.from_pretrained(model_id, subfolder=subfolder)
     return tokenizer, model
 
-tokenizer_whole, model_whole = load_model("bart-finetuned1")
+# Use the Hugging Face repository "lksai19/Legal-summarizer-models" and the subfolder "bart-finetuned2"
+tokenizer_whole, model_whole = load_model("lksai19/Legal-summarizer-models", "bart-finetuned2")
 
 def generate_whole_summary(input_text):
     processed_text = preprocess_text(input_text)  # Apply preprocessing
     return generate_summary_whole(model_whole, tokenizer_whole, processed_text)
 
 def generate_summary_whole(model, tokenizer, input_text, max_input_length=1024, 
-                           max_output_length=256, min_output_length=50):
+                           max_output_length=1024, min_output_length=50):
     inputs = tokenizer(input_text, return_tensors="pt", truncation=True, max_length=max_input_length)
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
@@ -120,12 +139,11 @@ def generate_summary_whole(model, tokenizer, input_text, max_input_length=1024,
             max_length=max_output_length,
             min_length=min_output_length,
             num_beams=4,
-            length_penalty=2.0,
+            length_penalty=1.0,
             no_repeat_ngram_size=3,
-            early_stopping=False
+            early_stopping=True
         )
     summary = tokenizer.decode(generated_ids[0], skip_special_tokens=True)
-    # print("Generated Summary:", summary)  # Debugging
     return summary
 
 ######################################
