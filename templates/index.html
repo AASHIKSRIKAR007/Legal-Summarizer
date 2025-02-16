@@ -1,46 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Summary Generator</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LegalEase - Document Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="lawLogo.jpg" alt="LegalEase Logo" class="logo">
+                <h1 class="brand-name">LegalEase</h1>
+            </div>
+            <h2 class="app-title">Legal Document Summarizer</h2>
+            <div class="placeholder-div"></div> <!-- For header balance -->
+        </div>
+    </header>
 
-<div class="container">
-  <!-- Top Section -->
-  <div class="top-section">
-    <!-- Text Area for Input -->
-    <div class="text-area-container">
-      <textarea id="text-input" placeholder="Paste your text here or upload a .txt file"></textarea>
-    </div>
-    
-    <!-- File Upload Option -->
-    <div class="file-input">
-      <input type="file" id="file-upload" accept=".txt" />
-    </div>
-    
-    <!-- Summary Type Selection (Radio Buttons) -->
-    <div class="radio-buttons">
-      <label>
-        <input type="radio" name="summary-type" value="whole-summary" checked /> Whole Summary
-      </label>
-      <label>
-        <input type="radio" name="summary-type" value="segmented-summary" /> Segmented Summary
-      </label>
-    </div>
-    
-    <!-- Generate Summary Button -->
-    <button class="generate-btn" id="generate-btn">Generate Summary</button>
-  </div>
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Left Panel - Input -->
+        <section class="panel input-panel">
+            <div class="text-area-container">
+                <textarea
+                    id="text-input"
+                    placeholder="Enter or paste your legal document text here..."
+                    class="scrollable-content"
+                ></textarea>
+            </div>
 
-  <!-- Bottom Section: Output -->
-  <div class="bottom-section">
-    <textarea id="summary-output" placeholder="Your summary will appear here..." readonly></textarea>
-  </div>
-</div>
+            <div class="controls-container">
+                <div class="upload-section">
+                    <label for="file-upload" class="upload-btn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        Upload Doc
+                    </label>
+                    <input type="file" id="file-upload" accept=".txt,.doc,.docx,.pdf" hidden>
+                </div>
 
-<script src="{{ url_for('static', filename='script.js') }}"></script>
+                <div class="summary-options">
+                    <label class="radio-label">
+                        <input type="radio" name="summary-type" value="whole-summary" checked>
+                        <span>Whole Summary</span>
+                    </label>
+                    <label class="radio-label">
+                        <input type="radio" name="summary-type" value="segmented-summary">
+                        <span>Segmented Summary</span>
+                    </label>
+                </div>
+
+                <button id="summarize-btn" class="summarize-btn">
+                    Summarize
+                </button>
+            </div>
+        </section>
+
+        <!-- Right Panel - Output -->
+        <section class="panel output-panel">
+            <div class="text-area-container">
+                <textarea
+                    id="summary-output"
+                    placeholder="Your summary will appear here..."
+                    class="scrollable-content"
+                    readonly
+                ></textarea>
+            </div>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
