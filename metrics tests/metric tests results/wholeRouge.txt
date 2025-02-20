@@ -1,0 +1,73 @@
+ROUGE Scores (Whole Summary)(length increased)
+ROUGE-1: 0.3859
+ROUGE-2: 0.1656
+ROUGE-L: 0.2189
+
+pre tuned
+ROUGE Scores (Whole Summary):
+ROUGE-1: 0.1341 
+ROUGE-2: 0.0452
+ROUGE-L: 0.0907
+
+Task	                                            ROUGE-1 	    ROUGE-2	        ROUGE-L
+Human-Level Summarization	                        0.6 - 0.7	    0.3 - 0.5	    0.5 - 0.6
+State-of-the-Art AI (Legal, News, Scientific)	    0.4 - 0.5	    0.2 - 0.3	    0.35 - 0.45
+Acceptable AI Performance	                        0.3 - 0.4	    0.15 - 0.25	    0.2 - 0.35
+Weak Summarization Models	                        <0.3	         <0.15	        <0.2
+
+
+
+unforged:
+ROUGE Scores (Whole Summary):
+ROUGE1:
+  Precision: 0.6217
+  Recall: 0.3008
+  F1 Score: 0.3859
+
+ROUGE2:
+  Precision: 0.2782
+  Recall: 0.1268
+  F1 Score: 0.1656
+
+ROUGEL:
+  Precision: 0.3636
+  Recall: 0.1683
+  F1 Score: 0.2189
+
+
+
+foged:
+ROUGE Scores (Whole Summary):
+ROUGE1:
+  Precision: 0.6322
+  Recall: 0.3375
+  F1 Score: 0.4199
+
+ROUGE2:
+  Precision: 0.3052
+  Recall: 0.1654
+  F1 Score: 0.2030
+
+ROUGEL:
+  Precision: 0.3849
+  Recall: 0.2062
+  F1 Score: 0.2550
+
+
+
+pretuning:
+ROUGE Scores (Whole Summary):
+ROUGE1:
+  Precision: 0.5738
+  Recall: 0.0787
+  F1 Score: 0.1341
+
+ROUGE2:
+  Precision: 0.2002
+  Recall: 0.0264
+  F1 Score: 0.0452
+
+ROUGEL:
+  Precision: 0.3981
+  Recall: 0.0531
+  F1 Score: 0.0907

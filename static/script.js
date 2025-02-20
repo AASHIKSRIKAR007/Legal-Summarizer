@@ -6,6 +6,43 @@ document.addEventListener('DOMContentLoaded', function() {
     const summarizeBtn = document.getElementById('summarize-btn');
     const radioButtons = document.querySelectorAll('input[name="summary-type"]');
 
+    Swal.fire({
+        title: "Welcome to Legal Document Summarization",
+        html: `
+            <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
+                This app  provides two types of summarization for legal documents using <strong>fine-tuned LegalBert and Bart models.</strong>
+            </p>
+            <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
+                <strong>Whole Summary:</strong> Generates a concise summary for the entire document.
+            </p>
+            <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">    
+                <strong>Segmented Summary:</strong> Breaks the document into sections (Facts, Arguments, Analysis, Judgment, Statutes) and summarizes each separately.
+            </p>
+            <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
+                The models takes time to generate the summary.
+            </p>
+            <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
+                Upload txt casefile or paste your case file Click <strong>'Generate Summary'</strong> and wait for the results.
+            </p>
+            <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
+                Click <strong>'Generate Summary'</strong> and wait for the results.
+            </p>
+            <p style="font-family:'Space Grotesque';text-align:center;font-size:14px;">
+                <strong>&copy; Thanuja Lksai Srikar</strong>
+            </p>
+        `,
+        icon: "info",
+        confirmButtonText: "OK",
+        background: "#D3EAFF",
+        width: "450px", // Adjust width
+        padding: "1px",
+        customClass: {
+            title: "swal-title",
+            content: "swal-content",
+            confirmButton: "swal-confirm-button"
+        }
+    });
+
     // File upload handling
     fileUpload.addEventListener('change', function(event) {
         const file = event.target.files[0];

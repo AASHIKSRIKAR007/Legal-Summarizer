@@ -1,4 +1,4 @@
-#code for inference of combined extractive and abstractive legalbert model
+#code for inference of combined extractive and abstractive legalbert model (segmented summary)
 
 from transformers import pipeline, BertTokenizer, BartForConditionalGeneration, BartTokenizer
 import os
