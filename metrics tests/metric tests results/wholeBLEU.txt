@@ -1,0 +1,94 @@
+Whole:
+after finetuning
+BLEU Score Evaluation:
+BLEU-1: 0.2151
+BLEU-2: 0.1336
+BLEU-3: 0.0856
+BLEU-4: 0.0580
+
+pre tuning
+BLEU Score Evaluation:
+BLEU-1: 0.0079
+BLEU-2: 0.0043
+BLEU-3: 0.0023
+BLEU-4: 0.0013
+
+
+
+Task	                                            BLEU-1	        BLEU-2	        BLEU-3     	  BLEU-4
+Human-Level Summarization	                        0.3 - 0.4	   0.2 - 0.3	  0.15 - 0.2	0.1 - 0.15
+State-of-the-Art AI (Legal, News, Scientific)	    0.2 - 0.3	  0.15 - 0.25	  0.1 - 0.2	    0.05 - 0.1
+Acceptable AI Performance	                        0.1 - 0.2	  0.05 - 0.15	  0.03 - 0.1	0.01 - 0.05
+Weak Summarization Models	                          < 0.1	        < 0.05	        < 0.03	       < 0.01
+
+unforged:
+BLEU Scores (Submetrics):
+BLEU-1:
+  Precision: 0.2151
+  Recall: 0.5819
+  F1 Score: 0.2902
+
+BLEU-2:
+  Precision: 0.1336
+  Recall: 0.5819
+  F1 Score: 0.2056
+
+BLEU-3:
+  Precision: 0.0844
+  Recall: 0.5819
+  F1 Score: 0.1417
+
+BLEU-4:
+  Precision: 0.0580
+  Recall: 0.5819
+  F1 Score: 0.1021
+
+
+
+
+forged:
+BLEU Scores (Submetrics):
+BLEU-1:
+  Precision: 0.2551
+  Recall: 0.6022
+  F1 Score: 0.3301
+
+BLEU-2:
+  Precision: 0.1736
+  Recall: 0.6022
+  F1 Score: 0.2456
+
+BLEU-3:
+  Precision: 0.1244
+  Recall: 0.6022
+  F1 Score: 0.1817
+
+BLEU-4:
+  Precision: 0.0980
+  Recall: 0.6022
+  F1 Score: 0.1421
+
+
+
+
+(pretuned):
+BLEU Scores (Submetrics):
+BLEU-1:
+  Precision: 0.0079
+  Recall: 0.3742
+  F1 Score: 0.0147
+
+BLEU-2:
+  Precision: 0.0043
+  Recall: 0.3742
+  F1 Score: 0.0083
+
+BLEU-3:
+  Precision: 0.0022
+  Recall: 0.3742
+  F1 Score: 0.0043
+
+BLEU-4:
+  Precision: 0.0013
+  Recall: 0.3742
+  F1 Score: 0.0025
