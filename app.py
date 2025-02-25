@@ -5,11 +5,15 @@ import warnings
 import torch
 from transformers import pipeline, BartForConditionalGeneration, BartTokenizer, AutoModelForSequenceClassification
 import json
+import os
 
 app = Flask(__name__)
 
 # Load spaCy model for sentence segmentation
 nlp = spacy.load("en_core_web_sm")
+
+# Directory where case files are stored
+CASEFILES_DIR = 'data/casefiles'
 
 ######################################
 # Utility Functions
@@ -21,16 +25,7 @@ def clean_text(text):
     text = re.sub(r'\s+', ' ', text).strip()  # Remove excess spaces and newlines
     return text
 
-def preprocess_text(text):
-    """
-    Cleans and segments text into sentences using spaCy.
-    
-    Args:
-        text (str): Raw input text.
-    
-    Returns:
-        str: A single string with processed sentences for summarization.
-    """
+def preprocess_text(text):    
     cleaned_text = clean_text(text)
     doc = nlp(cleaned_text)
     sentences = [sent.text.strip() for sent in doc.sents if sent.text.strip()]
@@ -152,6 +147,45 @@ def generate_summary_whole(model, tokenizer, input_text, max_input_length=1024,
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/get_casefiles', methods=['GET'])
+def get_casefiles():
+    try:
+        if not os.path.exists(CASEFILES_DIR):
+            return jsonify({"error": "Casefiles directory not found"}), 404
+            
+        casefiles = os.listdir(CASEFILES_DIR)
+        casefiles = [f for f in casefiles if f.endswith(".txt")]
+        
+        if not casefiles:
+            return jsonify({"error": "No casefiles found"}), 404
+            
+        return jsonify({"casefiles": casefiles})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+# Load the selected case file
+@app.route('/load_casefile', methods=['POST'])
+def load_casefile():
+    data = request.get_json()
+    casefile_name = data.get('casefile_name')
+
+    # Check if filename is provided
+    if not casefile_name:
+        return jsonify({"error": "No casefile name provided"}), 400
+    
+    casefile_path = os.path.join(CASEFILES_DIR, casefile_name)
+
+    # Check if file exists
+    if not os.path.exists(casefile_path):
+        return jsonify({"error": f"File '{casefile_name}' not found"}), 404
+
+    try:
+        with open(casefile_path, 'r', encoding='utf-8', errors='replace') as file:
+            casefile_text = file.read()
+        return jsonify({"text": casefile_text})
+    except Exception as e:
+        return jsonify({"error": f"Error loading case file: {str(e)}"}), 500
 
 @app.route('/summarize', methods=['POST'])
 def summarize():

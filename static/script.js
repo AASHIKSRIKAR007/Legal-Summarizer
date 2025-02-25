@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const summarizeBtn = document.getElementById('summarize-btn');
     const downloadSummaryBtn = document.getElementById('downloadSummaryBtn');
     const radioButtons = document.querySelectorAll('input[name="summary-type"]');
-
+    const selectCasefileBtn = document.getElementById('selectCasefileBtn');
+    const casefileList = document.getElementById('casefileList');
     // Ensure download button is disabled initially
     downloadSummaryBtn.disabled = true;
 
@@ -26,7 +27,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 The models takes time to generate the summary.
             </p>
             <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
-                Upload txt casefile or paste your case file Click <strong>'Generate Summary'</strong> and wait for the results.
+                Upload txt casefile or paste your case file.
+            </p>
+            <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
+                Or try out a casefile from the list at the top right
             </p>
             <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
                 Click <strong>'Generate Summary'</strong> and wait for the results.
@@ -45,17 +49,6 @@ document.addEventListener('DOMContentLoaded', function() {
             content: "swal-content",
             confirmButton: "swal-confirm-button"
         }
-    });
-
-    document.getElementById('downloadCasefilesBtn').addEventListener('click', function() {
-        // Replace with your file URL or logic to fetch casefiles
-        const fileUrl = 'static/casefiles.zip';
-        const link = document.createElement('a');
-        link.href = fileUrl;
-        link.download = 'casefiles.zip';
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
     });
 
     // File upload handling
@@ -92,6 +85,72 @@ document.addEventListener('DOMContentLoaded', function() {
             textInput.value = 'Invalid file type. Please upload a .txt, .doc, .docx, or .pdf file.';
         }
     });
+
+    // Function to fetch and display the list of case files
+    async function fetchCasefiles() {
+        try {
+            const response = await fetch('/get_casefiles');
+            const data = await response.json();
+            console.log(data);
+
+            if (data.error) {
+                casefileList.innerHTML = `<li>Error fetching case files: ${data.error}</li>`;
+                return;
+            }
+
+            // Populate the casefile list
+            const listContainer = casefileList.querySelector('#dynamicCasefileList');
+            listContainer.innerHTML = '';
+            data.casefiles.forEach(file => {
+                const listItem = document.createElement('li');
+                listItem.className = 'casefile-item';
+                listItem.textContent = file;
+                listItem.addEventListener('click', () => loadCasefile(file));
+                listContainer.appendChild(listItem);
+            });
+        } catch (error) {
+            casefileList.innerHTML = `<li>Error fetching case files: ${error.message}</li>`;
+        }
+    }
+
+    // Load a case file when clicked
+    function loadCasefile(fileName) {
+        fetch('/load_casefile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ casefile_name: fileName })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) throw new Error(data.error);
+            textInput.value = data.text;
+        })
+        .catch(error => {
+            textInput.value = `Error loading case file: ${error.message}`;
+        });
+    }
+
+    // Fetch casefiles when the page loads
+    fetchCasefiles();
+
+    selectCasefileBtn.addEventListener('click', function() {
+        casefileList.classList.toggle('show-list');
+    });
+
+    selectCasefileBtn.addEventListener('mouseleave', function() {
+        setTimeout(() => {
+            if (!casefileList.matches(':hover')) {
+                casefileList.classList.remove('show-list');
+            }
+        }, 200);
+    });
+    
+    casefileList.addEventListener('mouseleave', function() {
+        casefileList.classList.remove('show-list');
+    });
+
 
     // Summarize button click handler
     summarizeBtn.addEventListener('click', async function() {
