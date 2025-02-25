@@ -19,6 +19,18 @@
             </div>
             <h2 class="app-title">Legal Document Summarizer</h2>
             <div class="placeholder-div"></div> <!-- For header balance -->
+
+            <div class="top-right-button">
+                <button id="downloadCasefilesBtn" class="download-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Casefiles
+                </button>
+            </div>
+
         </div>
     </header>
 
@@ -64,7 +76,6 @@
             </div>
         </section>
 
-        <!-- Right Panel - Output -->
         <section class="panel output-panel">
             <div class="text-area-container">
                 <textarea
@@ -74,12 +85,21 @@
                     readonly
                 ></textarea>
             </div>
+            <div class="summary-download-container">
+                <button id="downloadSummaryBtn" class="download-btn" disabled>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <polyline points="7 10 12 15 17 10"/>
+                        <line x1="12" y1="15" x2="12" y2="3"/>
+                    </svg>
+                    Summary
+                </button>
+            </div>
         </section>
     </main>
     <footer>
         <p>&copy; Thanuja LKSai Srikar</p>
     </footer>
-
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>

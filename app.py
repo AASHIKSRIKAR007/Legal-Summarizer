@@ -123,7 +123,7 @@ def load_model(model_id, subfolder):
     return tokenizer, model
 
 # Use the Hugging Face repository "lksai19/Legal-summarizer-models" and the subfolder "bart-finetuned2"
-tokenizer_whole, model_whole = load_model("lksai19/Legal-summarizer-models", "bart-finetuned2")
+tokenizer_whole, model_whole = load_model("lksai19/Legal-summarizer-models", "bart-finetuned")
 
 def generate_whole_summary(input_text):
     processed_text = preprocess_text(input_text)  # Apply preprocessing

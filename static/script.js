@@ -4,7 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const textInput = document.getElementById('text-input');
     const summaryOutput = document.getElementById('summary-output');
     const summarizeBtn = document.getElementById('summarize-btn');
+    const downloadSummaryBtn = document.getElementById('downloadSummaryBtn');
     const radioButtons = document.querySelectorAll('input[name="summary-type"]');
+
+    // Ensure download button is disabled initially
+    downloadSummaryBtn.disabled = true;
 
     Swal.fire({
         title: "Welcome to Legal Document Summarization",
@@ -15,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
                 <strong>Whole Summary:</strong> Generates a concise summary for the entire document.
             </p>
-            <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">    
+            <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
                 <strong>Segmented Summary:</strong> Breaks the document into sections (Facts, Arguments, Analysis, Judgment, Statutes) and summarizes each separately.
             </p>
             <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
@@ -41,6 +45,17 @@ document.addEventListener('DOMContentLoaded', function() {
             content: "swal-content",
             confirmButton: "swal-confirm-button"
         }
+    });
+
+    document.getElementById('downloadCasefilesBtn').addEventListener('click', function() {
+        // Replace with your file URL or logic to fetch casefiles
+        const fileUrl = 'static/casefiles.zip';
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.download = 'casefiles.zip';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
     });
 
     // File upload handling
@@ -100,6 +115,9 @@ document.addEventListener('DOMContentLoaded', function() {
         summarizeBtn.textContent = 'Summarizing...';
         summaryOutput.value = 'Generating summary...';
 
+        // Always disable download button when starting a new summary
+        downloadSummaryBtn.disabled = true;
+
         try {
             const response = await fetch('/summarize', {
                 method: 'POST',
@@ -120,13 +138,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (data.error) {
                 summaryOutput.value = `Error: ${data.error}`;
+                // Keep download button disabled on error
+                downloadSummaryBtn.disabled = true;
             } else {
                 summaryOutput.value = data.summary;
+                // Enable download button only if we have valid summary
+                if (data.summary && data.summary.trim() !== '') {
+                    downloadSummaryBtn.disabled = false;
+                }
             }
 
         } catch (error) {
             console.error('Error:', error);
             summaryOutput.value = 'An error occurred while generating the summary. Please try again.';
+            // Keep download button disabled on error
+            downloadSummaryBtn.disabled = true;
         } finally {
             // Reset button state
             summarizeBtn.disabled = false;
@@ -135,23 +161,35 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Add paste handler for convenience
-    textInput.addEventListener('paste', function() {
+    textInput.addEventListener('input', function() {
         // Clear any error messages that might be there
         if (textInput.value.startsWith('Error:') ||
             textInput.value.startsWith('Invalid file') ||
             textInput.value.startsWith('File too large')) {
             textInput.value = '';
         }
+
+        // Reset download button state when input changes
+        downloadSummaryBtn.disabled = true;
     });
 
-    // Character count display (optional feature)
-    textInput.addEventListener('input', function() {
-        const wordCount = textInput.value.trim().split(/\s+/).filter(Boolean).length;
-        const charCount = textInput.value.length;
+    // Download summary button handler
+    downloadSummaryBtn.addEventListener('click', function() {
+        const summary = summaryOutput.value;
+        // Extra check to make sure we have content to download
+        if (summary && summary.trim() !== '' &&
+            !summary.startsWith('Generating summary...') &&
+            !summary.startsWith('Error:') &&
+            !summary.startsWith('An error occurred')) {
 
-        // You can add this to your HTML if you want to display counts
-        // document.getElementById('word-count').textContent = `Words: ${wordCount}`;
-        // document.getElementById('char-count').textContent = `Characters: ${charCount}`;
+            const blob = new Blob([summary], { type: 'text/plain' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'legal_summary.txt';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
     });
 
     // Prevent accidental navigation when there's unsaved text
