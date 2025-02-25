@@ -10,4 +10,9 @@ classification_model
 extractive_model
 trails
 .idea
-data_metric
+data/data_metric/segmented_case
+data/data_metric/segmented_case2
+data/data_metric/segmented_summ
+data/data_metric/segmented_summ2
+data/data_metric/whole_case
+data/data_metric/whole_summ
