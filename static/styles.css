@@ -84,6 +84,19 @@ body {
     right: 20px;
     z-index: 1000; /* Ensure it stays on top */
 }
+
+@media screen and (max-width: 768px) {
+    .top-right-button {
+        position: relative;
+        top: auto;
+        right: auto;
+        margin-top: 10px; /* Adjust spacing */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+}
 /* 
     #downloadCasefilesBtn {
         background-color: #007bff; /* Blue color 
@@ -359,7 +372,16 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 10;
 }
-
+@media screen and (max-width: 768px) {
+    .casefile-list {
+        position: absolute;
+        top: 100%; /* Places it right below the button */
+        left: 50%;
+        transform: translateX(-50%); /* Center align with button */
+        width: 120px; /* Keep the same width */
+        margin-top: 5px; /* Small gap */
+    }
+}
 .casefile-item {
     padding: 10px;
     cursor: pointer;
