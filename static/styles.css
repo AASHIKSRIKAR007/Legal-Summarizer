@@ -288,7 +288,7 @@ body {
     border-top: 1px solid var(--border-color);
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 /* Summary and Download Button Container - UPDATED FOR ALIGNMENT */
