@@ -29,8 +29,8 @@ document.addEventListener('DOMContentLoaded', function() {
             <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
                 Upload txt casefile or paste your case file.
             </p>
-            <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
-                Or try out a casefile from the list at the top right
+            <p style="font-family:'Space Grotesque';text-align:center;font-size:18px;">
+                <strong>Or Try out sample casefiles</strong>
             </p>
             <p style="font-family:'Space Grotesque';text-align:center;font-size:16px;">
                 Click <strong>'Generate Summary'</strong> and wait for the results.
