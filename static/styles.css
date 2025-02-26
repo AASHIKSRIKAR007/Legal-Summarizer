@@ -209,9 +209,16 @@ body {
     background-color: rgba(15, 23, 42, 0.4);
     border-top: 1px solid var(--border-color);
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 1.5rem;
-    height: 83px; /* Fixed height for both panels' bottom sections */
+    gap: 1rem;
+    justify-content: space-between; /* Ensures proper spacing */
+    min-height: 83px;
+}
+.upload-section, .summary-options {
+    flex-grow: 1; /* Distributes space equally */
+    display: flex;
+    align-items: center;
 }
 
 /* Upload Button */
@@ -227,6 +234,7 @@ body {
     font-size: 0.9rem;
     color: var(--text-primary);
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 
 .upload-btn:hover {
@@ -237,7 +245,8 @@ body {
 /* Radio Buttons */
 .summary-options {
     display: flex;
-    gap: 1.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .radio-label {
@@ -247,6 +256,7 @@ body {
     cursor: pointer;
     font-size: 0.9rem;
     color: var(--text-secondary);
+    white-space: nowrap;
 }
 
 .radio-label input[type="radio"] {
@@ -258,7 +268,8 @@ body {
 
 /* Summarize Button */
 .summarize-btn {
-    margin-left: auto;
+    /* margin-left: auto; */
+    min-width: 120px;
     padding: 0.7rem 1.3rem;
     background-color: var(--primary-color);
     color: var(--text-primary);
@@ -269,6 +280,7 @@ body {
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 0 10px rgba(99, 102, 241, 0.2);
+    flex-shrink: 0;
 }
 
 .summarize-btn:hover {
@@ -289,6 +301,24 @@ body {
     display: flex;
     align-items: center;
     gap: 1rem;
+}
+
+@media (max-width: 768px) {
+    .controls-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
+    }
+
+    .upload-section, .summary-options {
+        justify-content: center;
+        width: 100%;
+    }
+
+    .summarize-btn {
+        width: 100%; /* Make the button full width on small screens */
+        text-align: center;
+    }
 }
 
 /* Summary and Download Button Container - UPDATED FOR ALIGNMENT */
